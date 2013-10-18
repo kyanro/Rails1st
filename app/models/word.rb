@@ -20,15 +20,9 @@ class Word < ActiveRecord::Base
 	#
 	def self.getSearchedWord(time)
 		searchedWord = 
-			self.where(
-				[
-					"since < ? and " +
-					"until > ? ", 
-					self.getTimeFromDateTimeString(time),
-					self.getTimeFromDateTimeString(time)
-				]
-			)
-			.first
+				 where(["since < ?", self.getTimeFromDateTimeString(time)])
+				.where(["until > ?", self.getTimeFromDateTimeString(time)])
+				.first
 
 		if (searchedWord == nil) then
 			return "ですね。分かりました。"
