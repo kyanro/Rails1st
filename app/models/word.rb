@@ -15,4 +15,25 @@ class Word < ActiveRecord::Base
 		return DateTime.parse(time).strftime("%-m月%-d日 %k時%M分")
 	end
 
+	#
+	#= 渡されたstring型の時間をもとにWordsDBを検索し、最適なstring型のWordを返却する
+	#
+	def self.getSearchedWord(time)
+		searchedWord = 
+			self.where(
+				[
+					"since < ? and " +
+					"until > ? ", 
+					self.getTimeFromDateTimeString(time),
+					self.getTimeFromDateTimeString(time)
+				]
+			)
+			.first
+
+		if (searchedWord == nil) then
+			return "ですね。分かりました。"
+		else
+			return searchedWord[:word]
+		end
+	end
 end
