@@ -1,7 +1,11 @@
 require 'date'
 class Word < ActiveRecord::Base
-	def self.getTimeFromDateTime(time)
-		return DateTime.parse(time).strftime("2000-01-01 %H:%M")
+	#
+	#= 受け取ったDatetime文字列を "2000-01-01 %H:%M:00" のDatetime型として返却する
+	# time型の列の検索をactive record で利用するために作成
+	#
+	def self.getTimeFromDateTimeString(time)
+		return DateTime.parse(DateTime.parse(time).strftime("2000-01-01 %H:%M"))
 	end
 
 	#
