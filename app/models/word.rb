@@ -25,7 +25,7 @@ class Word < ActiveRecord::Base
 				 where(["since <= ?", self.getTimeFromDateTimeString(time)])
 				.where(["until >= ?", self.getTimeFromDateTimeString(time)])
 				.where(["emotion = ?", emotion])
-				.first
+				.sample
 
 		if (searchedWord == nil) then
 			return "ですね。分かりました。"
