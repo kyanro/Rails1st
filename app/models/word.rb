@@ -24,7 +24,8 @@ class Word < ActiveRecord::Base
 		searchedWord = 
 				 where(["since <= ?", self.getTimeFromDateTimeString(time)])
 				.where(["until >= ?", self.getTimeFromDateTimeString(time)])
-				.where(["emotion = ?", emotion])
+				.where(["emotion_lower_limit <= ?", emotion])
+				.where(["emotion_upper_limit >= ?", emotion])
 				.sample
 
 		if (searchedWord == nil) then

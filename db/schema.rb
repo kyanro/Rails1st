@@ -15,10 +15,11 @@ ActiveRecord::Schema.define(version: 20131014140053) do
 
   create_table "words", force: true do |t|
     t.string   "character_id"
-    t.integer  "emotion"
-    t.string   "word"
+    t.integer  "emotion_lower_limit"
+    t.integer  "emotion_upper_limit"
     t.time     "since"
     t.time     "until"
+    t.string   "word"
     t.boolean  "seed"
     t.datetime "created_at"
     t.datetime "updated_at"
