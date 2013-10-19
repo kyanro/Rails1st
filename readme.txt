@@ -3,11 +3,7 @@
 	最悪の場合でも固定文面を返すことができるようにはなりました！
 
 今後の予定
-	火：(localhostではなく)外部からAPIを叩けるようにする
-	水：時間に応じた文面を返す
-	木：RoRで遊びつつ文面のブラッシュアップ
-	金：RoRで遊びつつ文面のブラッシュアップ
-	土：RoRで遊びつつ文面のブラッシュアップ
+	日：RoRで遊びつつ文面のブラッシュアップ
 
 
 簡易インターフェース仕様（予定）
@@ -16,23 +12,41 @@
 	
 	{
 		"time":"2013-08-20T18:00:00",
-		"emotion":0,
-		"character":1	//1:男性向け文面　2:女性向け文面 3以降は未定（拡張容易）
+		"emotion":7,
+		"character_id":10	//指定なしの場合、 1:default文面となる。他に(10:とりあえず英国うまれの こん○う) が初期データとしてある
 	}
 
 	の形式のJSONをPOSTすると
 
 	{
-		"word":"18時00分ね。わかったわ。でも、一体いつまで寝ているつもりなのこのダメ人間！"
+		"word":"18時00分 モーニングコールをかけるのは、私デース！"
 	}
 
 	の形式のJSONデータを返却する
 
-	とりあえず3台キャリアで見れればいいかなということで、50文字程度の文面にする予定
-		（確認メールで笑わせたい！）
+	とりあえず3大キャリアで見れればいいかなということで、50文字程度の文面にする予定
+	（確認メールで笑わせたい！）
+
+投入データについて
+	db/seeds/default.tsv をエクセルにドラッグして、好きなように編集
+	保存時に unicode テキスト で保存すればOK
+
+	詳細仕様
+		形式: tsv
+		encode: UTF-16LE with BOM
+		header:
+			character_id : キャラID
+			emotion_lower_limit : 感情下限
+			emotion_upper_limit : 感情上限
+			since : この時間から
+			until : この時間まで
+			word : 文言
+	です。
 
 
+確認について
 自分でAPIの確認をするときは、下記Curl及びREST Console を利用しています。
 
-curl -v -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"time":"2013-08-20T18:00:00", "emotion":0}' http://localhost:3000/words/getmorning
+curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"time":"2013-08-20T18:00:00", "emotion":1, "character_id":10}' http://pppvm1.cloudapp.net/words/getmorning
 
+curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"time":"2013-08-20T18:00:00", "emotion":1, "character_id":10}' http://pppvm2.cloudapp.net/words/getmorning
