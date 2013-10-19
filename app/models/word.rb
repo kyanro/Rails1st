@@ -18,16 +18,18 @@ class Word < ActiveRecord::Base
 	end
 
 	#
-	#= 渡されたstring型の時間,int型のemotionもとにWordsDBを検索し、最適なstring型のWordを返却する
+	#= 渡されたstring型の時間,int型のemotion,int型のcharacter_idをもとにWordsDBを検索し、	最適なstring型のWordを返却する
 	#
-	def self.getSearchedWord(time, emotion)
+	def self.getSearchedWord(time, emotion, character_id)
+		# 初期値とりあえず1
+		character_id ||= 1
 		searchedWord = 
-				 where(["since <= ?", self.getTimeFromDateTimeString(time)])
+				 where(["character_id = ?", character_id])
+				.where(["since <= ?", self.getTimeFromDateTimeString(time)])
 				.where(["until >= ?", self.getTimeFromDateTimeString(time)])
 				.where(["emotion_lower_limit <= ?", emotion])
 				.where(["emotion_upper_limit >= ?", emotion])
 				.sample
-
 		if (searchedWord == nil) then
 			return "ですね。分かりました。"
 		else

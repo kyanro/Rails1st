@@ -5,7 +5,7 @@ class WordsController < ApplicationController
 		@words = Word.all
 	end
 	def getmorning
-		searchdWord   = Word.getSearchedWord(params[:time],params[:emotion])
+		searchdWord   = Word.getSearchedWord(params[:time], params[:emotion], params[:character_id])
 		setTime       = Word.toResponseTimeString(params[:time])
 		@responseWord = setTime + " " + searchdWord 
 	end
