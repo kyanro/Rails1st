@@ -1,4 +1,8 @@
 require 'date'
+require 'net/http'
+require 'uri'
+require 'json'
+
 class Word < ActiveRecord::Base
 	#
 	#= 受け取ったDatetime文字列を "2000-01-01 %H:%M:00" のDatetime型として返却する
@@ -35,5 +39,17 @@ class Word < ActiveRecord::Base
 		else
 			return searchedWord[:word]
 		end
+	end
+
+	#
+	#= 嫉妬される男の喜び
+	# ところであなたの検索履歴に 美人 name ってあったけど、私に不満でも？
+	#
+	def self.getJealousyWord(emotion)
+		uri = URI.parse('http://bjin.me/api/?type=rand&count=1&format=json')
+		json = Net::HTTP.get(uri)
+		result = JSON.parse(json)
+
+		return "ところであなたの検索履歴に 美人 #{result[0]["category"]} ってあったけど、私に不満でも？"
 	end
 end
