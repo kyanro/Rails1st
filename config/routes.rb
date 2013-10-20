@@ -1,5 +1,6 @@
 GetMorning::Application.routes.draw do
-  post 'words/getmorning/', to: 'words#getmorning'
+  post 'words/getmorning/' , to: 'words#getmorning'
+  post 'words/getmorning2/', to: 'words#getmorning2'
   resources :words
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
